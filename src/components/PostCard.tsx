@@ -11,12 +11,12 @@ export default function PostCard({ post, userId }: { post: Post; userId?: string
       <div className="px-4 py-3 flex items-center gap-3">
         <img
           src={post.author?.avatar || '/default-avatar.png'}
-          alt={post.author?.github_user || 'user'}
+          alt={post.author?.username || 'user'}
           className="h-8 w-8 rounded-full object-cover"
         />
         <div>
           <p className="text-sm font-medium text-zinc-900">
-            {post.author?.github_user}
+            {post.author?.username}
           </p>
           <p className="text-xs text-zinc-500">{formatDate(post.created_at)}</p>
         </div>

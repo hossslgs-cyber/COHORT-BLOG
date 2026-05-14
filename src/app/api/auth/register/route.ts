@@ -16,20 +16,6 @@ export async function POST(req: Request) {
 
     const supabase = getSupabase()
 
-    // Check whitelist
-    const { data: whitelistEntry } = await supabase
-      .from('whitelist')
-      .select('email')
-      .eq('email', email)
-      .single()
-
-    if (!whitelistEntry) {
-      return NextResponse.json(
-        { error: 'Email is not whitelisted' },
-        { status: 403 }
-      )
-    }
-
     // Check if user already exists
     const { data: existingUser } = await supabase
       .from('users')
@@ -51,11 +37,12 @@ export async function POST(req: Request) {
       id: userId,
       email,
       password: hashedPassword,
-      github_user: email.split('@')[0],
+      username: email.split('@')[0],
       avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`,
     })
 
     if (error) {
+      console.error('Registration Error:', error)
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 

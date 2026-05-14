@@ -6,7 +6,7 @@ export interface WhitelistEntry {
 export interface User {
   id: string
   email: string
-  github_user: string
+  username: string
   bio: string
   avatar: string
   created_at: string

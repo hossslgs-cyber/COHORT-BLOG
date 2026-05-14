@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
   id TEXT PRIMARY KEY,
   email TEXT UNIQUE NOT NULL,
   password TEXT, -- Hashed password
-  github_user TEXT, -- Optional for legacy or dual-auth
+  username TEXT NOT NULL,
   bio TEXT DEFAULT '',
   avatar TEXT DEFAULT '',
   created_at TIMESTAMPTZ DEFAULT NOW()

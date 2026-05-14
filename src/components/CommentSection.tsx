@@ -74,7 +74,7 @@ export default function CommentSection({ postId, userId }: { postId: string; use
               />
               <div>
                 <p className="text-xs font-medium text-zinc-900">
-                  {comment.user?.github_user}
+                  {comment.user?.username}
                   <span className="font-normal text-zinc-400 ml-1">
                     {formatDate(comment.created_at)}
                   </span>

@@ -50,7 +50,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         return {
           id: user.id,
           email: user.email,
-          name: user.github_user || user.email.split('@')[0],
+          name: user.username || user.email.split('@')[0],
           image: user.avatar,
         }
       },
