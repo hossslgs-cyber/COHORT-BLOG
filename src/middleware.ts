@@ -11,6 +11,7 @@ export default auth((req) => {
     pathname.startsWith('/api/posts') ||
     pathname.startsWith('/api/auth') ||
     pathname.startsWith('/api/uploadthing') ||
+    pathname.startsWith('/api/whitelist') ||
     pathname.startsWith('/_next') ||
     pathname === '/favicon.ico'
 
@@ -19,7 +20,7 @@ export default auth((req) => {
   }
 
   if (!req.auth) {
-    const signInUrl = new URL('/api/auth/signin', req.url)
+    const signInUrl = new URL('/login', req.url)
     signInUrl.searchParams.set('callbackUrl', req.url)
     return Response.redirect(signInUrl)
   }

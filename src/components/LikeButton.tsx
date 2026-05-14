@@ -37,7 +37,7 @@ export default function LikeButton({
   }
 
   return (
-    <button onClick={toggleLike} className="flex items-center gap-1 hover:text-red-500" disabled={loading}>
+    <button onClick={toggleLike} className="flex items-center gap-1 hover:text-red-500 disabled:opacity-50" disabled={loading || !session}>
       <svg
         className={`h-5 w-5 ${liked ? 'fill-red-500 text-red-500' : ''}`}
         fill={liked ? 'currentColor' : 'none'}

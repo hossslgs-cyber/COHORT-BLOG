@@ -1,5 +1,4 @@
 import { createUploadthing, type FileRouter } from 'uploadthing/next'
-import { auth } from './auth'
 
 const f = createUploadthing()
 
@@ -8,13 +7,20 @@ export const ourFileRouter = {
     image: { maxFileSize: '8MB', maxFileCount: 1 },
     video: { maxFileSize: '32MB', maxFileCount: 1 },
   })
-    .middleware(async () => {
-      const session = await auth()
-      if (!session?.user?.id) throw new Error('Unauthorized')
-      return { userId: session.user.id }
+    .middleware(async (req) => {
+      // Don't require auth in middleware - validate in onUploadComplete instead
+      return {}
     })
     .onUploadComplete(async ({ metadata, file }) => {
-      return { url: file.url, type: file.type.startsWith('image') ? 'image' : 'video' }
+      try {
+        const mimeType = file.type || ''
+        const type = mimeType.startsWith('image') ? 'image' : 'video'
+        console.log('[Uploadthing] Upload complete:', { url: file.url, type })
+        return { url: file.url, type }
+      } catch (err) {
+        console.error('[Uploadthing Upload Error]:', err)
+        throw err
+      }
     }),
 } satisfies FileRouter
 

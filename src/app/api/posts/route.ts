@@ -38,7 +38,7 @@ export async function GET() {
           .eq('post_id', post.id)
           .eq('user_id', userId)
           .eq('type', 'like')
-          .single()
+          .maybe_single()
         user_has_liked = !!like
       }
 

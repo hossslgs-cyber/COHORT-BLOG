@@ -15,7 +15,7 @@ export default function CreatePostForm() {
   const [error, setError] = useState('')
 
   const { startUpload } = useUploadThing('mediaUploader', {
-    onUploadProgress: () => setUploading(true),
+    onClientUploadComplete: () => setUploading(false),
     onUploadError: (err) => {
       setError(err.message)
       setUploading(false)
@@ -41,7 +41,13 @@ export default function CreatePostForm() {
         throw new Error('Upload failed')
       }
 
-      const { url, type } = uploadRes[0]
+      const uploadedFile = uploadRes[0]
+      const url = uploadedFile?.url
+      const type = uploadedFile?.type as 'image' | 'video' || 'image'
+
+      if (!url) {
+        throw new Error('No upload URL returned')
+      }
 
       const res = await fetch('/api/posts', {
         method: 'POST',

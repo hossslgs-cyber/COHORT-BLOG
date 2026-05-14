@@ -39,7 +39,7 @@ export default async function PostPage({ params }: { params: Promise<{ id: strin
       .eq('post_id', id)
       .eq('user_id', session.user.id)
       .eq('type', 'like')
-      .single()
+      .maybe_single()
     user_has_liked = !!like
   }
 

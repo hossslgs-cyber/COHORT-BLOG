@@ -21,7 +21,7 @@ export async function POST(req: Request) {
       .from('users')
       .select('id')
       .eq('email', email)
-      .single()
+      .maybe_single()
 
     if (existingUser) {
       return NextResponse.json(

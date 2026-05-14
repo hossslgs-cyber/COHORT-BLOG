@@ -5,7 +5,7 @@ import CreatePostForm from '@/components/CreatePostForm'
 export default async function CreatePage() {
   const session = await auth()
   if (!session) {
-    redirect('/api/auth/signin')
+    redirect('/login')
   }
 
   return (

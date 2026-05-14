@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getSupabase } from '@/lib/db'
 import { auth } from '@/lib/auth'
 
-export async function GET(request: NextRequest) {
+  export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const type = searchParams.get('type') || 'like'
   const postId = request.url.split('/posts/')[1]?.split('/')[0]
@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 
-  return NextResponse.json(data)
+  return NextResponse.json(data || [])
 }
 
 export async function POST(request: NextRequest) {
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
       .eq('post_id', postId)
       .eq('user_id', session.user.id)
       .eq('type', 'like')
-      .single()
+      .maybe_single()
 
     if (existing) {
       return NextResponse.json({ message: 'Already liked' })

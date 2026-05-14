@@ -15,6 +15,7 @@ declare module 'next-auth' {
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  secret: process.env.AUTH_SECRET,
   providers: [
     Credentials({
       name: 'Credentials',
@@ -32,7 +33,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           .from('users')
           .select('*')
           .eq('email', credentials.email)
-          .single()
+          .maybe_single()
 
         if (error || !user || !user.password) {
           return null
