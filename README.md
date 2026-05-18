@@ -1,6 +1,7 @@
  Cohort Blog
 
  What it does
+
 Cohort Blog is a simple full-stack blog application where users can create posts and view them in a list. Each post includes an author, content, and timestamp. Posts are stored in a Postgres database and persist across refreshes.
 
  Stack
