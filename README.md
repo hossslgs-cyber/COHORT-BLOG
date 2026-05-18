@@ -1,34 +1,45 @@
-# Cohort Blog
+ Cohort Blog
 
-A private social blog platform for a cohort of up to 100 members.
+ What it does
+Cohort Blog is a simple full-stack blog application where users can create posts and view them in a list. Each post includes an author, content, and timestamp. Posts are stored in a Postgres database and persist across refreshes.
 
-## Tech Stack
+ Stack
+- Next.js (App Router)
+- Supabase (Postgres)
+- Tailwind CSS
 
-- **Framework:** Next.js 16 (App Router)
-- **Styling:** Tailwind CSS v4
-- **Database:** PostgreSQL (Supabase)
-- **Auth:** Auth.js v5 (GitHub OAuth)
-- **Media:** UploadThing (S3-compatible storage)
+How to run locally
 
-## Setup
+1. Clone the repository:
+   git clone https://github.com/hossslgs-cyber/COHORT-BLOG.git
 
-1. Install dependencies:
-   ```bash
+2. Navigate into the project:
+   cd COHORT-BLOG
+
+3. Install dependencies:
    npm install
-   ```
 
-2. Copy `.env.example` to `.env.local` and fill in the values.
-
-3. Run the Supabase migration (`supabase/migration.sql`) in your Supabase SQL editor.
-
-4. Add whitelist emails to the `whitelist` table in Supabase.
+4. Create a `.env.local` file in the root and add:
+   NEXT_PUBLIC_SUPABASE_URL=your_url_here
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key_here
 
 5. Run the development server:
-   ```bash
    npm run dev
-   ```
 
-## Environment Variables
+6. Open in browser:
+   http://localhost:3000
+
+
+AI mistake I fixed
+
+The AI-generated code initially had incorrect environment variable handling, which caused Supabase to fail connecting. I fixed this by properly setting up `.env.local` and ensuring the variables were correctly accessed in the code.
+
+
+
+
+
+
+ Environment Variables
 
 | Variable | Description |
 |---|---|
@@ -41,10 +52,5 @@ A private social blog platform for a cohort of up to 100 members.
 | `UPLOADTHING_SECRET` | UploadThing secret key |
 | `UPLOADTHING_APP_ID` | UploadThing app ID |
 
-## Deployment
 
-Deploy to Vercel:
-1. Push to GitHub
-2. Import project in Vercel
-3. Add all environment variables
-4. Deploy
+
