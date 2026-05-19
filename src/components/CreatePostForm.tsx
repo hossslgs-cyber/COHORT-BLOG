@@ -22,7 +22,7 @@ export default function CreatePostForm() {
     },
   })
 
-  const handleFileChange = useCallback((e: React.ChangeEvent<<HTMLInputElement>) => {
+  const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0]
     if (!f) return
     setFile(f)
