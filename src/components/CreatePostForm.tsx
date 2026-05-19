@@ -22,7 +22,7 @@ export default function CreatePostForm() {
     },
   })
 
-  const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = useCallback((e: React.ChangeEvent<<HTMLInputElement>) => {
     const f = e.target.files?.[0]
     if (!f) return
     setFile(f)
@@ -70,59 +70,95 @@ export default function CreatePostForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="rounded-xl border-2 border-dashed border-zinc-300 p-8 text-center">
-        {preview ? (
-          <div className="space-y-4">
-            {file?.type.startsWith('video') ? (
-              <video src={preview} controls className="max-h-96 mx-auto rounded-lg" />
-            ) : (
-              <img src={preview} alt="Preview" className="max-h-96 mx-auto rounded-lg" />
-            )}
-            <button
-              type="button"
-              onClick={() => { setFile(null); setPreview(null) }}
-              className="text-sm text-red-500 hover:text-red-700"
-            >
-              Remove
-            </button>
+    <div className="glass-card p-6">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {error && (
+          <div className="rounded-lg border border-red-500/20 bg-red-500/10 p-3 text-sm text-red-400">
+            {error}
           </div>
-        ) : (
-          <label className="cursor-pointer">
-            <input
-              type="file"
-              accept="image/*,video/*"
-              onChange={handleFileChange}
-              className="hidden"
-            />
-            <div className="flex flex-col items-center gap-2 text-zinc-500">
-              <svg className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-              </svg>
-              <p className="text-sm">Click to upload an image or video</p>
-              <p className="text-xs">Max 8MB for images, 32MB for videos</p>
-            </div>
-          </label>
         )}
-      </div>
 
-      <input
-        value={caption}
-        onChange={(e) => setCaption(e.target.value)}
-        placeholder="Write a caption..."
-        className="w-full rounded-xl border border-zinc-200 px-4 py-3 text-sm outline-none focus:border-zinc-400"
-        maxLength={1000}
-      />
+        <div className="space-y-3">
+          <label className="block text-sm font-medium text-white/70">Photo or Video</label>
+          
+          {preview ? (
+            <div className="relative overflow-hidden rounded-xl border border-white/10">
+              {file?.type.startsWith('video') ? (
+                <video src={preview} className="w-full max-h-80" controls />
+              ) : (
+                <img src={preview} alt="Preview" className="w-full max-h-80 object-cover" />
+              )}
+              <button
+                type="button"
+                onClick={() => { setFile(null); setPreview(null) }}
+                className="absolute right-2 top-2 rounded-lg bg-black/60 p-2 text-white hover:bg-black/80"
+              >
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          ) : (
+            <label className="flex cursor-pointer flex-col items-center gap-3 rounded-xl border-2 border-dashed border-white/10 bg-white/5 p-8 text-center hover:border-indigo-500/30 transition-colors">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-indigo-500/10">
+                <svg className="h-8 w-8 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-white/70">Click to upload</p>
+                <p className="text-xs text-white/40 mt-1">Images or videos up to 8MB</p>
+              </div>
+              <input
+                type="file"
+                accept="image/*,video/*"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+            </label>
+          )}
+        </div>
 
-      {error && <p className="text-sm text-red-500">{error}</p>}
+        <div>
+          <label className="block text-sm font-medium text-white/70">Caption <span className="text-white/30">(optional)</span></label>
+          <textarea
+            value={caption}
+            onChange={(e) => setCaption(e.target.value)}
+            rows={3}
+            maxLength={500}
+            className="input-field mt-1 resize-none"
+            placeholder="What's on your mind?"
+          />
+          <p className="mt-1 text-right text-xs text-white/30">{caption.length}/500</p>
+        </div>
 
-      <button
-        type="submit"
-        disabled={!file || uploading}
-        className="w-full rounded-xl bg-zinc-900 py-3 text-sm font-medium text-white disabled:opacity-50 hover:bg-zinc-700"
-      >
-        {uploading ? 'Uploading...' : 'Share Post'}
-      </button>
-    </form>
+        <div className="flex gap-3">
+          <button
+            type="submit"
+            disabled={uploading || !file}
+            className="btn-primary flex-1 py-3 disabled:opacity-50"
+          >
+            {uploading ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="h-5 w-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                </svg>
+                Uploading...
+              </span>
+            ) : (
+              'Publish Post'
+            )}
+          </button>
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="rounded-lg border border-white/10 px-6 py-3 text-white/70 hover:bg-white/5"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
   )
 }
