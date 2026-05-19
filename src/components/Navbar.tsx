@@ -1,43 +1,45 @@
 'use client'
 
-import { useSession, signIn, signOut } from 'next-auth/react'
 import Link from 'next/link'
+import { useSession, signOut } from 'next-auth/react'
 
 export default function Navbar() {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
 
   return (
-    <nav className="border-b border-zinc-200 bg-white">
-      <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">
-        <Link href="/" className="text-lg font-bold text-zinc-900">
+    <nav className="nav-glass">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
+        <Link href="/" className="text-xl font-bold gradient-text">
           Cohort Blog
         </Link>
-        <div className="flex items-center gap-4">
-          {session ? (
+
+        <div className="flex items-center gap-3">
+          {status === 'loading' ? (
+            <div className="h-5 w-5 animate-pulse rounded-full bg-indigo-500/30" />
+          ) : session?.user ? (
             <>
-              <Link
-                href="/create"
-                className="rounded-full bg-zinc-900 px-4 py-1.5 text-sm font-medium text-white hover:bg-zinc-700"
-              >
+              <span className="hidden text-sm text-white/60 sm:inline">
+                {session.user.name}
+              </span>
+              <Link href="/create-post" className="btn-primary text-sm">
                 New Post
               </Link>
               <button
-                onClick={() => signOut()}
-                className="text-sm text-zinc-500 hover:text-zinc-900"
+                onClick={() => signOut({ callbackUrl: '/' })}
+                className="rounded-lg border border-white/10 px-3 py-1.5 text-sm text-white/80"
               >
-                Sign Out
+                Sign out
               </button>
-              <span className="text-sm text-zinc-500">
-                {session.user?.name}
-              </span>
             </>
           ) : (
-            <Link
-              href="/login"
-              className="rounded-full bg-zinc-900 px-4 py-1.5 text-sm font-medium text-white hover:bg-zinc-700"
-            >
-              Sign In
-            </Link>
+            <>
+              <Link href="/login" className="text-sm text-white/70">
+                Sign in
+              </Link>
+              <Link href="/register" className="btn-primary text-sm">
+                Get started
+              </Link>
+            </>
           )}
         </div>
       </div>
