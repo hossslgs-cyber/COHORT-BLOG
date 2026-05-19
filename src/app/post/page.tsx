@@ -47,7 +47,7 @@ export default async function PostPage({ params }: { params: Promise<{ id: strin
               {authorInitial}
             </div>
             <div>
-              <p className="font-medium text-white">{post.author?.username || text-white">{post.author?.username || 'Unknown'}</p>
+              <p className="font-medium text-white">{post.author?.username || "text-white">{post.author?.username || 'Unknown'}</p>
               <p className="text-xs text-white/40">{formatDate(post.created_at)}</p>
             </div>
           </div>
