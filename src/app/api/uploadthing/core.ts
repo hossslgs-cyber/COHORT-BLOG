@@ -1,4 +1,4 @@
-import { createUploadthing, type FileRouter } from "uploadthing/next";
+ import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 import { auth } from "@/lib/auth";
 
@@ -25,4 +25,5 @@ export const ourFileRouter = {
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;
+
 
