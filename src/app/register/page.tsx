@@ -10,8 +10,9 @@ export default function RegisterPage() {
   const [username, setUsername] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoadingLoading] = useState(false)
-  const] = useState(false)
-  const router = useRouter()
+  const [showPassword, setShowPassword] = useState(false)
+
+const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
